@@ -1,69 +1,59 @@
-import Image from "next/image";
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <div className="home-shell">
+      <section className="home-hero" aria-labelledby="home-heading">
+        <div className="hero-copy">
+          <p className="eyebrow">My Ward <span>/</span> Sunday desk</p>
+          <h1 id="home-heading">
+            Make room for what matters.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="hero-intro">
+            A simple, thoughtful place to prepare this week&apos;s sacrament meeting and keep the record of Sundays past.
           </p>
+          <div className="hero-actions">
+            <Link href="/meetings/current" className="button-primary">Open this Sunday <span aria-hidden="true">-&gt;</span></Link>
+            <Link href="/meetings" className="text-link">Browse the archive</Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="date-stamp" aria-label="Today">
+          <span className="date-stamp-label">Today</span>
+          <strong>18</strong>
+          <span>September 2026</span>
         </div>
-      </main>
+      </section>
+
+      <section className="home-lower" aria-label="Meeting program overview">
+        <div className="welcome-note">
+          <p className="eyebrow">A little order for the week</p>
+          <p className="note-heading">The best programs feel calm before anyone takes a seat.</p>
+          <p className="note-body">Keep the details together so the people, prayers, music, and message can take their proper place.</p>
+          <div className="note-signoff">
+            <span className="signoff-line" />
+            <span>Meeting desk</span>
+          </div>
+        </div>
+
+        <article className="program-preview" aria-label="Meeting program preview">
+          <div className="program-topline">
+            <span>Next on the stand</span>
+            <Image src="/file.svg" alt="Printed program icon" width={22} height={22} priority />
+          </div>
+          <div className="program-date">Sunday <strong>03</strong> May 2026</div>
+          <p className="program-title">Sacrament Meeting</p>
+          <p className="program-subtitle">Regular meeting <span aria-hidden="true">/</span> My Ward</p>
+          <div className="program-rule" />
+          <dl className="program-list">
+            <div><dt>Opening</dt><dd>The Spirit of God</dd></div>
+            <div><dt>Message</dt><dd>Faith in Jesus Christ</dd></div>
+            <div><dt>Closing</dt><dd>O God, Our Help in Ages Past</dd></div>
+          </dl>
+          <Link href="/meetings/1" className="program-link">View full program <span aria-hidden="true">-&gt;</span></Link>
+        </article>
+      </section>
     </div>
   );
 }
