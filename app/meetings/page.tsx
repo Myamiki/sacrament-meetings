@@ -1,8 +1,8 @@
 import MeetingCard from '@/components/MeetingCard';
 import { getMeetings } from '@/lib/meetings-db';
 
-export default function MeetingsPage() {
-  const meetings = getMeetings();
+export default async function MeetingsPage() {
+  const meetings = await getMeetings();
 
   return (
     <section aria-labelledby="meetings-heading">

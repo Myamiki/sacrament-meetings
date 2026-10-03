@@ -7,10 +7,11 @@ export default function NavLinks() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex gap-4">
+    <nav aria-label="Primary navigation" className="flex gap-4">
       <Link
         href="/"
         className={pathname === '/' ? 'font-bold underline' : ''}
+        aria-current={pathname === '/' ? 'page' : undefined}
       >
         Home
       </Link>
@@ -22,6 +23,7 @@ export default function NavLinks() {
             ? 'font-bold underline'
             : ''
         }
+        aria-current={pathname.startsWith('/meetings') ? 'page' : undefined}
       >
         Meetings
       </Link>
