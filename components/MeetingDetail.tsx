@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { deleteMeeting } from '@/lib/actions';
 import type { SacramentMeeting } from '@/lib/types';
 import PrintButton from './PrintButton';
 
@@ -16,7 +18,21 @@ export default function MeetingDetail({
           <h1>Sacrament Meeting</h1>
           <p className="detail-date">{meeting.date}</p>
         </div>
-        <PrintButton />
+        <div className="flex flex-wrap gap-3">
+          <PrintButton />
+          <Link
+            href={`/meetings/${meeting.id}/edit`}
+            className="button-secondary"
+          >
+            Edit meeting
+          </Link>
+          <form action={deleteMeeting}>
+            <input type="hidden" name="meetingId" value={meeting.id} />
+            <button type="submit" className="button-secondary">
+              Delete meeting
+            </button>
+          </form>
+        </div>
       </header>
 
       <div className="detail-meta" aria-label="Meeting information">

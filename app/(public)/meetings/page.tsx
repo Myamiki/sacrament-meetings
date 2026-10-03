@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import MeetingCard from '@/components/MeetingCard';
 import MeetingSearch from '@/components/MeetingSearch';
 import Pagination from '@/components/Pagination';
@@ -25,6 +26,10 @@ export default async function MeetingsPage(props: {
       <p className="mt-3 max-w-2xl text-slate-600">
         Review current and past programs, then open any meeting for a print-ready agenda.
       </p>
+
+      <Link href="/meetings/new" className="button-primary mt-5">
+        Create a meeting
+      </Link>
 
       <MeetingSearch />
 
