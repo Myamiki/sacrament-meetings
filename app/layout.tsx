@@ -10,6 +10,7 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://sacrament-meetings-ashy.vercel.app'),
   title: 'Sacrament Meeting Planner',
   description: 'Plan and review sacrament meeting agendas.',
 };

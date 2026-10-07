@@ -5,10 +5,14 @@ import PrintButton from './PrintButton';
 
 interface MeetingDetailProps {
   meeting: SacramentMeeting;
+  previousMeeting: Pick<SacramentMeeting, 'id' | 'date'> | null;
+  nextMeeting: Pick<SacramentMeeting, 'id' | 'date'> | null;
 }
 
 export default function MeetingDetail({
   meeting,
+  previousMeeting,
+  nextMeeting,
 }: MeetingDetailProps) {
   return (
     <article className="meeting-detail">
@@ -102,6 +106,25 @@ export default function MeetingDetail({
           </section>
         </div>
       </div>
+
+      {(previousMeeting || nextMeeting) && (
+        <nav aria-label="Meeting navigation" className="detail-navigation">
+          {previousMeeting ? (
+            <Link href={`/meetings/${previousMeeting.id}`} className="meeting-navigation-link">
+              <span aria-hidden="true">&larr;</span>
+              Previous Meeting
+            </Link>
+          ) : (
+            <span aria-hidden="true" />
+          )}
+          {nextMeeting && (
+            <Link href={`/meetings/${nextMeeting.id}`} className="meeting-navigation-link">
+              Next Meeting
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          )}
+        </nav>
+      )}
     </article>
   );
 }

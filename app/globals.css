@@ -201,6 +201,134 @@ body {
   color: #172033;
 }
 
+.archive-toolbar {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.archive-create-button {
+  justify-self: start;
+}
+
+.archive-search {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  gap: 0.65rem;
+}
+
+.archive-search-field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.archive-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  transform: translateY(-50%);
+  stroke: #7b8492;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  pointer-events: none;
+}
+
+.archive-search input {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid #d9d2c4;
+  border-radius: 0.5rem;
+  background: #fbfaf6;
+  padding: 0.65rem 0.85rem 0.65rem 2.65rem;
+  color: #172033;
+  font-size: 0.9rem;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.archive-search input::placeholder {
+  color: #8992a0;
+}
+
+.archive-search input:focus-visible {
+  border-color: #b45309;
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(180 83 9 / 15%);
+}
+
+.archive-search-button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #172033;
+  border-radius: 0.5rem;
+  background: #172033;
+  padding: 0.65rem 1.1rem;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.archive-search-button:hover {
+  border-color: #334155;
+  background: #334155;
+}
+
+.archive-search-button:focus-visible,
+.archive-page-button:focus-visible,
+.meeting-navigation-link:focus-visible {
+  outline: 3px solid rgb(180 83 9 / 35%);
+  outline-offset: 3px;
+}
+
+.archive-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  border-top: 1px solid #d9d2c4;
+  padding-top: 1.25rem;
+}
+
+.archive-page-button {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid #c98d66;
+  border-radius: 0.45rem;
+  background: #fbfaf6;
+  padding: 0.55rem 0.85rem;
+  color: #803f1b;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.archive-page-button:hover:not(:disabled) {
+  background: #f1e9dc;
+}
+
+.archive-page-button:disabled {
+  border-color: #ded8ca;
+  color: #9aa1aa;
+  cursor: not-allowed;
+}
+
+.archive-page-count {
+  color: #687386;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
 .program-preview {
   position: relative;
   border-top: 5px solid #d97706;
@@ -292,6 +420,39 @@ body {
   max-width: 68rem;
   margin: 0 auto;
   padding: 1rem 0 4rem;
+}
+
+.detail-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  border-top: 1px solid #d9d2c4;
+  padding-top: 1.25rem;
+}
+
+.meeting-navigation-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 1px solid #c98d66;
+  border-radius: 0.5rem;
+  background: #fbfaf6;
+  padding: 0.65rem 1rem;
+  color: #803f1b;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.meeting-navigation-link:hover {
+  border-color: #b45309;
+  background: #f1e9dc;
+  color: #653112;
 }
 
 .detail-header {
@@ -535,6 +696,12 @@ body {
     grid-template-columns: 1fr 12rem;
     align-items: center;
   }
+
+  .archive-toolbar {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1.5rem;
+  }
 }
 
 @media (max-width: 799px) {
@@ -554,6 +721,37 @@ body {
 }
 
 @media (max-width: 480px) {
+  .archive-search {
+    gap: 0.5rem;
+  }
+
+  .archive-search-button {
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+  }
+
+  .archive-pagination {
+    gap: 0.4rem;
+  }
+
+  .archive-page-button {
+    gap: 0.35rem;
+    padding-right: 0.55rem;
+    padding-left: 0.55rem;
+    font-size: 0.8rem;
+  }
+
+  .archive-page-count {
+    font-size: 0.8rem;
+  }
+
+  .meeting-navigation-link {
+    gap: 0.45rem;
+    padding-right: 0.7rem;
+    padding-left: 0.7rem;
+    font-size: 0.82rem;
+  }
+
   .program-list div {
     grid-template-columns: 1fr;
     gap: 0.25rem;

@@ -1,5 +1,5 @@
 import MeetingDetail from '@/components/MeetingDetail';
-import { getMeetingById } from '@/lib/meetings-db';
+import { getAdjacentMeetings, getMeetingById } from '@/lib/meetings-db';
 import { notFound } from 'next/navigation';
 
 interface MeetingPageProps {
@@ -14,5 +14,13 @@ export default async function MeetingPage({ params }: MeetingPageProps) {
     notFound();
   }
 
-  return <MeetingDetail meeting={meeting} />;
+  const { previousMeeting, nextMeeting } = await getAdjacentMeetings(meeting.date);
+
+  return (
+    <MeetingDetail
+      meeting={meeting}
+      previousMeeting={previousMeeting}
+      nextMeeting={nextMeeting}
+    />
+  );
 }

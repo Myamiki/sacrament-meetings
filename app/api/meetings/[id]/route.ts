@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import { getMeetingById } from '@/lib/meetings-db';
 
 interface RouteContext {
@@ -8,6 +9,11 @@ export async function GET(
   _request: Request,
   context: RouteContext,
 ) {
+  const session = await auth();
+  if (!session?.user) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const { id } = await context.params;
   const meetingId = Number(id);
 
