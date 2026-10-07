@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import NavLinks from '@/components/NavLinks';
+import SignOutButton from '@/components/SignOutButton';
 
 export default function MeetingsLayout({
   children,
@@ -14,7 +15,10 @@ export default function MeetingsLayout({
             Meetings
           </h1>
 
-          <NavLinks />
+          <div className="flex items-center gap-4">
+            <NavLinks />
+            <SignOutButton />
+          </div>
         </div>
 
         <div className="mt-4">

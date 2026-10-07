@@ -115,6 +115,39 @@ export async function getMeetingById(
   });
 }
 
+type MeetingNavigationItem = Pick<SacramentMeeting, 'id' | 'date'>;
+
+export async function getAdjacentMeetings(date: string): Promise<{
+  previousMeeting: MeetingNavigationItem | null;
+  nextMeeting: MeetingNavigationItem | null;
+}> {
+  const previousMeetingsPromise = (async () =>
+    await sql`
+      SELECT id, date::text AS date
+      FROM meetings
+      WHERE date < ${date}
+      ORDER BY date DESC, id DESC
+      LIMIT 1
+    ` as MeetingNavigationItem[])();
+  const nextMeetingsPromise = (async () =>
+    await sql`
+      SELECT id, date::text AS date
+      FROM meetings
+      WHERE date > ${date}
+      ORDER BY date ASC, id ASC
+      LIMIT 1
+    ` as MeetingNavigationItem[])();
+  const [previousMeetings, nextMeetings] = await Promise.all([
+    previousMeetingsPromise,
+    nextMeetingsPromise,
+  ]);
+
+  return {
+    previousMeeting: previousMeetings[0] ?? null,
+    nextMeeting: nextMeetings[0] ?? null,
+  };
+}
+
 export async function getMeetingsByDate(
   date: string
 ): Promise<SacramentMeeting[]> {

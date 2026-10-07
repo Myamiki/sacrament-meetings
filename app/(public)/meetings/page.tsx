@@ -1,21 +1,29 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import MeetingCard from '@/components/MeetingCard';
 import MeetingSearch from '@/components/MeetingSearch';
 import Pagination from '@/components/Pagination';
-import { getMeetings } from '@/lib/meetings-db';
-import { getMeetingsTotalPages } from '@/lib/meetings-db';
+import { getMeetings, getMeetingsTotalPages } from '@/lib/meetings-db';
+
+export const metadata: Metadata = {
+  title: 'Meeting Archive | Sacrament Meeting Planner',
+  description: 'Browse and review past sacrament meeting programs in the Sacrament Meeting Planner.',
+};
 
 export default async function MeetingsPage(props: {
   searchParams?: Promise<{ query?: string; page?: string }>;
 }) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query ?? '';
-  const currentPage = Number(searchParams?.page) || 1;
+  const requestedPage = Number(searchParams?.page);
 
-  const [meetings, totalPages] = await Promise.all([
-    getMeetings(query, currentPage),
+  const [totalPages] = await Promise.all([
     getMeetingsTotalPages(query),
   ]);
+  const currentPage = Number.isSafeInteger(requestedPage) && requestedPage > 0
+    ? Math.min(requestedPage, Math.max(totalPages, 1))
+    : 1;
+  const meetings = await getMeetings(query, currentPage);
 
   return (
     <section aria-labelledby="meetings-heading">
@@ -27,11 +35,12 @@ export default async function MeetingsPage(props: {
         Review current and past programs, then open any meeting for a print-ready agenda.
       </p>
 
-      <Link href="/meetings/new" className="button-primary mt-5">
-        Create a meeting
-      </Link>
-
-      <MeetingSearch />
+      <div className="archive-toolbar">
+        <Link href="/meetings/new" className="button-primary archive-create-button">
+          Create a meeting
+        </Link>
+        <MeetingSearch />
+      </div>
 
       <div className="mt-8 grid gap-5 md:grid-cols-2">
         {meetings.map((meeting) => (

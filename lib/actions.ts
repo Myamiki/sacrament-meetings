@@ -1,7 +1,9 @@
 'use server';
 
+import { signIn, signOut, auth } from '@/auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { AuthError } from 'next-auth';
 import { z } from 'zod';
 import {
   addMeeting,
@@ -115,6 +117,11 @@ export async function createMeeting(
   _previousState: MeetingFormState,
   formData: FormData,
 ): Promise<MeetingFormState> {
+  const session = await auth();
+  if (!session?.user) {
+    return { message: 'You must be signed in to create a meeting.' };
+  }
+
   const validation = validateMeetingForm(formData);
 
   if (!validation.success) {
@@ -141,6 +148,11 @@ export async function updateMeeting(
   _previousState: MeetingFormState,
   formData: FormData,
 ): Promise<MeetingFormState> {
+  const session = await auth();
+  if (!session?.user) {
+    return { message: 'You must be signed in to update a meeting.' };
+  }
+
   if (!Number.isSafeInteger(id) || id < 1) {
     return { message: 'This meeting could not be found.' };
   }
@@ -170,6 +182,11 @@ export async function updateMeeting(
 const meetingIdSchema = z.coerce.number().int().positive();
 
 export async function deleteMeeting(formData: FormData): Promise<void> {
+  const session = await auth();
+  if (!session?.user) {
+    throw new Error('You must be signed in to delete a meeting.');
+  }
+
   const result = meetingIdSchema.safeParse(formData.get('meetingId'));
 
   if (!result.success) {
@@ -184,4 +201,28 @@ export async function deleteMeeting(formData: FormData): Promise<void> {
 
   revalidatePath('/meetings');
   redirect('/meetings');
+}
+
+export async function authenticate(
+  _previousState: string | undefined,
+  formData: FormData,
+): Promise<string | undefined> {
+  try {
+    await signIn('credentials', {
+      ...Object.fromEntries(formData),
+      redirectTo: '/meetings',
+    });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      return error.type === 'CredentialsSignin'
+        ? 'Invalid email or password.'
+        : 'Something went wrong.';
+    }
+
+    throw error;
+  }
+}
+
+export async function signOutAction() {
+  await signOut({ redirectTo: '/' });
 }
